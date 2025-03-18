@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/style/style.css' %}">
+    <title>Sorteio Nomes</title>
+</head>
+<body>
+    <div class="container">
+        <div class="container__conteudo">
+            <div class="container__informacoes">
+                <div class="container__texto">
+                    <h1>Sorteio de <span class="container__texto-azul">nome</span></h1>
+                    <p class="texto__paragrafo">insira os nomes</p>
+                </div>
+                <form method="post" action="{% url 'main' %}">
+                    {% csrf_token %}
+                    <input type="text" name="nomes" id="nomes" class="container__input" placeholder="Insira os nomes separados por vírgula">
+                    <input type="number" name="vezes_rodadas" id="vezes_rodadas" class="container__input" placeholder="Quantos usuários serão sorteados?">
+                    <div class="chute container__botoes">
+                        <button type="submit" class="container__botao">Sortear</button>
+                        <button type="reset" id="reiniciar" class="container__botao">Reiniciar Sorteio</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="container_resultado">
+            {% if resultado %}
+                <h2>Grupos Sorteados:</h2>
+                <ul>
+                    {% for grupo in resultado %}
+                        <li>{{ grupo|join:", " }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
